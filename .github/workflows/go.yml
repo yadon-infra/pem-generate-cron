@@ -32,3 +32,13 @@ jobs:
     
     - name: golangci-lint
       uses: reviewdog/action-golangci-lint@v2
+
+    - name: Test RSA key generation
+      run: |
+        mkdir -p testdir
+        go run main.go -dir testdir
+        if [ ! -f testdir/private-key.pem ]; then
+          echo "private-key.pem was not created"
+          exit 1
+        fi
+        echo "private-key.pem was successfully created in testdir"
